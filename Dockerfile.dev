@@ -1,0 +1,45 @@
+ARG FROM_IMAGE=node:18
+
+# hadolint ignore=DL3006
+FROM ${FROM_IMAGE} AS build
+
+LABEL maintainer="Vladimir Turnaev <turnaev@gmail.com>"
+
+ARG ANGULAR_VERSION=18.0.0
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+USER root
+
+# hadolint ignore=DL3008
+RUN apt-get update \
+&& DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
+ xdg-utils --fix-missing \
+&& apt-get clean -y \
+&& rm -rf \
+ /var/cache/apt/archives \
+ /var/lib/apt/lists/* \
+ /var/cache/* \
+ /usr/share/doc/*
+
+USER node
+
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global \
+PATH=/home/node/.npm-global/bin:/var/www/bin:$PATH \
+APP_HOME=/var/www
+
+WORKDIR $APP_HOME
+
+# hadolint ignore=DL3016
+RUN mkdir -p .npm-global \
+&& echo 'install angular cli version='$ANGULAR_VERSION \
+&& npm install -g @angular/cli@$ANGULAR_VERSION install --loglevel silly \
+&& npm install -g  install --loglevel silly
+
+## hadolint ignore=DL3016
+#RUN npm install --loglevel silly \
+#&& npm run build
+
+EXPOSE 4200 49153
+
+CMD ["npm", "start"]

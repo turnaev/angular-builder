@@ -1,0 +1,11 @@
+---
+
+services:
+  frontend:
+    image: example.com/frontend:0.0.1
+    container_name: frontend
+    hostname: frontend
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80

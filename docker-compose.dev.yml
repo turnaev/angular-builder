@@ -1,0 +1,13 @@
+---
+
+services:
+  frontend-dev:
+    image: ${BUILD_IMAGE}
+    container_name: ${DEV_CONTAINER_NAME}
+    hostname: dev
+    # command: sleep infinity
+    volumes:
+      - ./src:/var/www
+    ports:
+      - 4200:4200
+      - 49153:49153
