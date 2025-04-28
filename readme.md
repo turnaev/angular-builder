@@ -5,7 +5,6 @@ git clone git@github.com:turnaev/angular-builder.git
 2. git add src as submodele
 ```
 git submodule add [your_git_repa] ./src
-
 ```
 
 3. change src
@@ -45,6 +44,7 @@ http://localhost:4200
 ```
 make console
 ng build
+make build
 ```
 7. start app container
 [docker](docker)
