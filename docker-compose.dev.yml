@@ -5,7 +5,8 @@ services:
     image: ${BUILD_IMAGE}
     container_name: ${DEV_CONTAINER_NAME}
     hostname: dev
-    # command: sleep infinity
+    command: ["sleep", "infinity"] # npm install
+    #command: ["npm", "start"]
     volumes:
       - ./src:/var/www
     ports:
